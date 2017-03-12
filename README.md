@@ -1,41 +1,41 @@
 # Project 6 - Globitek Authentication and Login Throttling
 
-Time spent: **X** hours spent in total
+Time spent: **3** hours spent in total
 
 ## User Stories
 
 The following **required** functionality is completed:
 
 1\. "staff/users/new.php" and "staff/users/edit.php"
-  * [ ]  Form with inputs for "Password" and "Confirm Password"
-  * [ ]  Strong password requirements text
+  * [x]  Form with inputs for "Password" and "Confirm Password"
+  * [x]  Strong password requirements text
 
 2\. Data validations
-  * [ ]  Returns an error if password or confirm_password are blank.
-  * [ ]  Returns an error if password and confirm_password do not match.
-  * [ ]  Returns an error if password is not at least 12 characters long.
-  * [ ]  Returns an error if password does not meet character requirements.
-  * [ ]  Returns any errors related to other validations already on the user.
+  * [x]  Returns an error if password or confirm_password are blank.
+  * [x]  Returns an error if password and confirm_password do not match.
+  * [x]  Returns an error if password is not at least 12 characters long.
+  * [x]  Returns an error if password does not meet character requirements.
+  * [x]  Returns any errors related to other validations already on the user.
 
 3\. Saving a user
-  * [ ]  Encrypts the password
-  * [ ]  Stores the password in the database
+  * [x]  Encrypts the password
+  * [x]  Stores the password in the database
 
 4\. Login page
-  * [ ]  Verify the correct password.
-  * [ ]  Do not create a User Enumeration vulnerability.
+  * [x]  Verify the correct password.
+  * [x]  Do not create a User Enumeration vulnerability.
 
 5\. If a user fails to log in:
-  * [ ]  Record the failed login for the first 5 attempts.
-  * [ ]  Return a "too many failed logins" message after 5 attempts.
-  * [ ]  Future attempts will show the number of minutes remaining in the lockout.
-  * [ ]  After the lockout period, the failed logins count resets to 0.
+  * [x]  Record the failed login for the first 5 attempts.
+  * [x]  Return a "too many failed logins" message after 5 attempts.
+  * [x]  Future attempts will show the number of minutes remaining in the lockout.
+  * [x]  After the lockout period, the failed logins count resets to 0.
 
 6\. After any successful login:
-  * [ ]  Set the failed_logins.count for the username to 0.
+  * [x]  Set the failed_logins.count for the username to 0.
 
 7\. SQLi and XSS
-  * [ ]  Do not introduce any SQLI Injection and Cross-Site Scripting vulnerabilities.
+  * [x]  Do not introduce any SQLI Injection and Cross-Site Scripting vulnerabilities.
 
 The following advanced user stories are optional:
 
