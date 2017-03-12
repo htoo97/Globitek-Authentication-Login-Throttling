@@ -623,7 +623,7 @@
     $user = db_fetch_assoc($users_result);
       $attempt = date("Y-m-d H:i:s");
       $sql = "UPDATE failed_logins SET ";
-      $sql .= "count='1', ";
+      $sql .= "count=1, ";
       $sql .= "last_attempt='" . $attempt . "' ";
       $sql .= "WHERE id='" . db_escape($db, $user['id']) . "' ";
       $sql .= "LIMIT 1; ";

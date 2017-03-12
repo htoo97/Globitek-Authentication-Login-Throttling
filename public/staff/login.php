@@ -49,10 +49,8 @@ if(is_post_request() && request_is_same_domain()) {
       $user = db_fetch_assoc($user_result);
       // failed login username already exists
       if ($user) {
-        failed_login($username);
-
         // check for failed login attempts
-        if ($user['count'] > '5') {
+        if ($user['count'] >= '5') {
           $time_diff = ceil(($present - strtotime($user['last_attempt']))/60);
           if ($time_diff >= '5') {
             // lockout time is up
@@ -62,6 +60,9 @@ if(is_post_request() && request_is_same_domain()) {
             $minutes = 5 - $time_diff;
             $errors[] = "Too many failed logins for this username. You will need to wait " . $minutes . " minutes before attempting another login";
           }
+        }
+        else {
+          failed_login($username);
         }
       }
       else {
