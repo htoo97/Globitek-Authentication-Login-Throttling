@@ -11,7 +11,6 @@ $user = db_fetch_assoc($users_result);
 
 // Set default values for all variables the page needs.
 $errors = array();
-$password_errors = array();
 
 if(is_post_request() && request_is_same_domain()) {
   ensure_csrf_token_valid();
@@ -24,41 +23,18 @@ if(is_post_request() && request_is_same_domain()) {
   if (isset($_POST['password'])) { $user['password'] = h($_POST['password']);}
   if (isset($_POST['confirmPassword'])) { $user['confirmPassword'] = h($_POST['confirmPassword']);}
 
-  // PASSWORD VALIDATIONS
-  // blank password
-  if (is_blank($user['password'])) {
-    $password_errors[] = "Password cannot be blank.";
-  }
-  // blank password confirmation
-  if (is_blank($user['confirmPassword'])) {
-    $password_errors[] = "Password confirmation cannot be blank.";
-  }
-  // password and confirm password don't match
-  if ($user['password'] != $user['confirmPassword']) {
-    $password_errors[] = "Password and confirm password don't match.";
-  }
-  // password is not at least 12 characters long
-  if (!has_length($user['password'], ['min' => 12, 'max' => 255])) {
-    $password_errors[] = "Password is not at least 12 characters long.";
-  }
-  // Upper, lower, number, symbol - 1 each
-  if (!preg_match('/[A-Z]/', $user['password']) || !preg_match('/[a-z]/', $user['password']) || !preg_match('/[0-9]/', $user['password']) || !preg_match('/[~!@#$%^&*+=]/', $user['password'])) {
-    $password_errors[] = "Password does not contain at least one uppercase letter, one lowercase letter, one number and one symbol.";
+
+
+  if (!is_blank($user['password'])) {
+    $user['password'] = password_hash($user['password'], PASSWORD_BCRYPT);
   }
 
-  if (empty($password_errors)) {
-    $user['password'] = password_hash($user['password'], PASSWORD_BCRYPT);
-    $result = update_user($user);
-    if($result === true) {
-      redirect_to('show.php?id=' . $user['id']);
-    }
-    else {
-      $errors = $result;
-    }
+  $result = update_user($user);
+  if($result === true) {
+    redirect_to('show.php?id=' . $user['id']);
   }
   else {
-    $errors = validate_user($user);
-    $errors = array_merge($errors, $password_errors);
+    $errors = $result;
   }
 
 }

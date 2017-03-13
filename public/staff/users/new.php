@@ -31,25 +31,10 @@ if(is_post_request() && request_is_same_domain()) {
   if (is_blank($user['password'])) {
     $password_errors[] = "Password cannot be blank.";
   }
-  // blank password confirmation
-  if (is_blank($user['confirmPassword'])) {
-    $password_errors[] = "Password confirmation cannot be blank.";
-  }
-  // password and confirm password don't match
-  if ($user['password'] != $user['confirmPassword']) {
-    $password_errors[] = "Password and confirm password don't match.";
-  }
-  // password is not at least 12 characters long
-  if (!has_length($user['password'], ['min' => 12, 'max' => 255])) {
-    $password_errors[] = "Password is not at least 12 characters long.";
-  }
-  // Upper, lower, number, symbol - 1 each
-  if (!preg_match('/[A-Z]/', $user['password']) || !preg_match('/[a-z]/', $user['password']) || !preg_match('/[0-9]/', $user['password']) || !preg_match('/[~!@#$%^&*+=]/', $user['password'])) {
-    $password_errors[] = "Password does not contain at least one uppercase letter, one lowercase letter, one number and one symbol.";
-  }
 
   if (empty($password_errors)) {
     $user['password'] = password_hash($user['password'], PASSWORD_BCRYPT);
+
     $result = insert_user($user);
     if($result === true) {
       $new_id = db_insert_id($db);

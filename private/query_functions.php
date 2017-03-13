@@ -516,6 +516,26 @@
     } elseif (!is_unique_username($user['username'], $user['id'])) {
       $errors[] = "Username not allowed. Try another.";
     }
+
+    // non-blank password - perform PASSWORD VALIDATIONS
+    if (!is_blank($user['password'])) {
+      // blank password confirmation
+      if (is_blank($user['confirmPassword'])) {
+        $errors[] = "Password confirmation cannot be blank.";
+      }
+      // password and confirm password don't match
+      if (!password_verify($user['confirmPassword'], $user['password'])) {
+        $errors[] = "Password and confirm password don't match.";
+      }
+      // password is not at least 12 characters long
+      if (!has_length($user['password'], ['min' => 12, 'max' => 255])) {
+        $errors[] = "Password is not at least 12 characters long.";
+      }
+      // Upper, lower, number, symbol - 1 each
+      if (!preg_match('/[A-Z]/', $user['password']) || !preg_match('/[a-z]/', $user['password']) || !preg_match('/[0-9]/', $user['password']) || !preg_match('/[~!@#$%^&*+=]/', $user['password'])) {
+        $errors[] = "Password does not contain at least one uppercase letter, one lowercase letter, one number and one symbol.";
+      }
+    }
     return $errors;
   }
 
@@ -567,8 +587,13 @@
     $sql .= "first_name='" . db_escape($db, $user['first_name']) . "', ";
     $sql .= "last_name='" . db_escape($db, $user['last_name']) . "', ";
     $sql .= "email='" . db_escape($db, $user['email']) . "', ";
-    $sql .= "username='" . db_escape($db, $user['username']) . "', ";
-    $sql .= "hashed_password='" . db_escape($db, $user['password']) . "' ";
+
+    // update password only if not blank
+    if (!is_blank($user['password'])) {
+      $sql .= "hashed_password='" . db_escape($db, $user['password']) . "', ";
+    }
+
+    $sql .= "username='" . db_escape($db, $user['username']) . "' ";
     $sql .= "WHERE id='" . db_escape($db, $user['id']) . "' ";
     $sql .= "LIMIT 1;";
     // For update_user statements, $result is just true/false
