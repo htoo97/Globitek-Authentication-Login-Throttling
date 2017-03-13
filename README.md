@@ -44,8 +44,8 @@ The following advanced user stories are optional:
     * One of bcrypt's strengths is its slowness that serves as a bottleneck to brute force/dictionary attacks. However, since bcrypt hashing only happens if the username already exists, the hacker may notice it's taking more time for the page to reload for a user that exists, especially if a long password is passed in, than being instantaneously redirected to the errors when logging in as a user that doesn't exist.
 
 * Bonus Objective 2\.
-  * [ ]  User password validations only run when the password is not blank.
-  * [ ]  `update_user` only encrypts and updates the password when the password is not blank.
+  * [x]  User password validations only run when the password is not blank.
+  * [x]  `update_user` only encrypts and updates the password when the password is not blank.
 
 * Bonus Objective 3\.
   * [ ]  Create a new user using cost 10.
