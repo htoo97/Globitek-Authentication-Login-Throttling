@@ -33,7 +33,7 @@ if(is_post_request() && request_is_same_domain()) {
   }
 
   if (empty($password_errors)) {
-    $user['password'] = password_hash($user['password'], PASSWORD_BCRYPT);
+    $user['password'] = password_hash($user['password'], PASSWORD_BCRYPT, ['cost' => 12, ]);
 
     $result = insert_user($user);
     if($result === true) {

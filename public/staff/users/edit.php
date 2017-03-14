@@ -26,7 +26,7 @@ if(is_post_request() && request_is_same_domain()) {
 
 
   if (!is_blank($user['password'])) {
-    $user['password'] = password_hash($user['password'], PASSWORD_BCRYPT);
+    $user['password'] = password_hash($user['password'], PASSWORD_BCRYPT, ['cost' => 11,]);
   }
 
   $result = update_user($user);
