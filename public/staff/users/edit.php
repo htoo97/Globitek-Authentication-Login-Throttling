@@ -11,6 +11,7 @@ $user = db_fetch_assoc($users_result);
 
 // Set default values for all variables the page needs.
 $errors = array();
+$prevPassword = "";
 
 if(is_post_request() && request_is_same_domain()) {
   ensure_csrf_token_valid();
@@ -23,18 +24,28 @@ if(is_post_request() && request_is_same_domain()) {
   if (isset($_POST['password'])) { $user['password'] = h($_POST['password']);}
   if (isset($_POST['confirmPassword'])) { $user['confirmPassword'] = h($_POST['confirmPassword']);}
 
-
-
   if (!is_blank($user['password'])) {
+    if (isset($_POST['prevPassword'])) {
+      $prevPassword = h($_POST['prevPassword']);
+      if(!password_verify($prevPassword, $user['hashed_password'])) {
+        $errors[] = "Previous password is incorrect";
+      }
+    }
     $user['password'] = password_hash($user['password'], PASSWORD_BCRYPT, ['cost' => 11,]);
   }
 
-  $result = update_user($user);
-  if($result === true) {
-    redirect_to('show.php?id=' . $user['id']);
+  // only if passwords match
+  if (empty($errors)) {
+    $result = update_user($user);
+    if($result === true) {
+      redirect_to('show.php?id=' . $user['id']);
+    }
+    else {
+      $errors = $result;
+    }
   }
   else {
-    $errors = $result;
+    $errors = array_merge($errors, validate_user($user));
   }
 
 }
@@ -59,6 +70,8 @@ if(is_post_request() && request_is_same_domain()) {
     <input type="text" name="username" value="<?php echo h($user['username']); ?>" /><br />
     Email:<br />
     <input type="text" name="email" value="<?php echo h($user['email']); ?>" /><br />
+    Previous Password:<br />
+    <input type="password" name="prevPassword" value="" /><br />
     Password:<br />
     <input type="password" name="password" value="" /><br />
     Confirm Password:<br />
