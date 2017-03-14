@@ -77,6 +77,8 @@ if(is_post_request() && request_is_same_domain()) {
     <br />
     <?php echo "Passwords should be at least 12 characters and include at least one uppercase letter, lowercase letter, number, and symbol.";?>
     <br />
+    <?php echo "Strong password suggestion: " . generate_strong_password(12);?>
+    <br />
     <br />
 
     <input type="submit" name="submit" value="Create"  />

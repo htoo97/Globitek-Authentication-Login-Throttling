@@ -70,6 +70,8 @@
     }
   }
 
+  // Hashes a password using PHP's crypt function and bcrypt hash algorithm
+  // Adds a salt of 22 characters
   function my_password_hash($password) {
     // make random 22-character salt
     $rand_str = random_string(22);
@@ -82,9 +84,55 @@
     return $hash;
   }
 
+  // Verifies password using password and previously hashed password
   function my_password_verify($password, $hashed_password) {
     $new_hash = crypt($password, $hashed_password);
     return ($new_hash === $hashed_password);
+  }
+
+  // Generates a random strong password containing the number of characters specified
+  function generate_strong_password($num_chars) {
+    $password = "";
+
+    // special positions for upper, lower, number and symbol
+    $interval = $num_chars/3;
+    $special_positions = array(
+        0, $num_chars-1, 0+$interval, $num_chars-$interval
+      );
+    shuffle($special_positions);
+    $upper_position = $special_positions[0];
+    $lower_position = $special_positions[1];
+    $number_position = $special_positions[2];
+    $symbol_position = $special_positions[3];
+
+    // create characters array containing the whole set
+    $chars = array_merge(
+              range('A','Z'),            //  0 to 25
+              range('a','z'),            // 26 to 51
+              range(0,9),                // 52 to 61
+              str_split('~!@#$%^&*+=?')  // 62 to size-1
+             );
+
+    for ($i = 0; $i<$num_chars; $i++) {
+      switch ($i) {
+        case $upper_position:
+          $password .= $chars[rand(0,25)];
+          break;
+        case $lower_position:
+          $password .= $chars[rand(26,51)];
+          break;
+        case $number_position:
+          $password .= $chars[rand(52,61)];
+          break;
+        case $symbol_position:
+          $password .= $chars[rand(62, count($chars)-1)];
+          break;
+        default:
+          $password .= $chars[rand(0, count($chars)-1)];
+      }
+    }
+
+    return $password;
   }
 
 ?>
