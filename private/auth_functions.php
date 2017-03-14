@@ -70,4 +70,21 @@
     }
   }
 
+  function my_password_hash($password) {
+    // make random 22-character salt
+    $rand_str = random_string(22);
+
+    // replace + with .
+    $salt = strtr($rand_str, '+', '.');
+
+    $hash_format = "$2y$10$";
+    $hash = crypt($password, $hash_format.$salt);
+    return $hash;
+  }
+
+  function my_password_verify($password, $hashed_password) {
+    $new_hash = crypt($password, $hashed_password);
+    return ($new_hash === $hashed_password);
+  }
+
 ?>
