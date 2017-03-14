@@ -55,9 +55,9 @@ The following advanced user stories are optional:
     * The password_hash function returns a hashed string that contains the algorithm, cost and salt of hashing, so all information needed to verify the hash by the password_verify function is present. Thus, it will verify password using whatever cost was used in hashing.
 
 * Bonus Objective 4\.
-  * [ ]  Add "Previous password" to "public/staff/users/edit.php"
-  * [ ]  Validate the previous password before allowing the password to be updated.
-  * [ ]  Require previous password only if new password is being updated (if also completing Bonus Objective 2).
+  * [x]  Add "Previous password" to "public/staff/users/edit.php"
+  * [x]  Validate the previous password before allowing the password to be updated.
+  * [x]  Require previous password only if new password is being updated (if also completing Bonus Objective 2).
 
 * Advanced Objective 1\.
   * [ ]  Implement `password_hash()` on your own as `my_password_hash()`.
