@@ -60,8 +60,8 @@ The following advanced user stories are optional:
   * [x]  Require previous password only if new password is being updated (if also completing Bonus Objective 2).
 
 * Advanced Objective 1\.
-  * [ ]  Implement `password_hash()` on your own as `my_password_hash()`.
-  * [ ]  Implement `password_verify()` on your own as `my_password_verify()`.
+  * [x]  Implement `password_hash()` on your own as `my_password_hash()`.
+  * [x]  Implement `password_verify()` on your own as `my_password_verify()`.
 
 * Advanced Objective 2\.
   * [ ]  Write `generate_strong_password()`
