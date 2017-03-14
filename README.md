@@ -64,8 +64,8 @@ The following advanced user stories are optional:
   * [x]  Implement `password_verify()` on your own as `my_password_verify()`.
 
 * Advanced Objective 2\.
-  * [ ]  Write `generate_strong_password()`
-  * [ ]  Add a suggestion for a 12-character strong password to the new and edit user pages.
+  * [x]  Write `generate_strong_password()`
+  * [x]  Add a suggestion for a 12-character strong password to the new and edit user pages.
 
 ## Video Walkthrough
 
